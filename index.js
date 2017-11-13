@@ -55,7 +55,7 @@ module.exports = (robot) => {
 
   robot.on('pull_request_review.submitted', async context => {
 
-    let state = context.payload.review.state;
+    // let state = context.payload.review.state;
 
     let reviews = await context.github.pullRequests.getReviews({
       owner: context.payload.repository.owner.login,
@@ -63,12 +63,52 @@ module.exports = (robot) => {
       number: context.payload.number,
     });
 
+    let numberOfApprovals = 0;
+
     for (const review of reviews) {
 
       console.log('=======');
       console.log(review);
-      
+
+      // number of approvals from the OTHER users
+      if (review.state === "APPROVED" && review.user.long !== context.payload.pull_request.user.login) {
+        numberOfApprovals++;
+      }
+
     }
+
+    await context.github.issues.removeAllLabels({
+      owner: context.payload.repository.owner.login,
+      repo: context.payload.repository.name,
+      number: context.payload.number
+    });
+
+    let stateToSet = "error";
+    let descriptionToSet = "At least 2 reviewers must approve this pull request.";
+    let labelsToSet = ["review:pending"];
+
+    if (numberOfApprovals >= 2) {
+      stateToSet = "success";
+      descriptionToSet = "We are all set!"
+      labelsToSet = ["review:done"];
+    }
+
+    await context.github.issues.addLabels({
+      owner: context.payload.repository.owner.login,
+      repo: context.payload.repository.name,
+      number: context.payload.number,
+      labels: labelsToSet
+    });
+
+    await context.github.repos.createStatus({
+      owner: context.payload.repository.owner.login,
+      repo: context.payload.repository.name,
+      sha: context.payload.pull_request.head.sha,
+      state: stateToSet,
+      description: descriptionToSet,
+      context: "TapWiser Bot"
+    });
+
 
 
     // state = approved
