@@ -65,7 +65,7 @@ module.exports = (robot) => {
 
     let numberOfApprovals = 0;
 
-    for (var i = 0; i < review.length; i++) {
+    for (var i = 0; i < reviews.length; i++) {
 
       let review = reviews[i];
 
