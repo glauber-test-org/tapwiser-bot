@@ -65,7 +65,9 @@ module.exports = (robot) => {
 
     let numberOfApprovals = 0;
 
-    for (const review of reviews) {
+    for (var i = 0; i < review.length; i++) {
+
+      let review = reviews[i];
 
       console.log('=======');
       console.log(review);
