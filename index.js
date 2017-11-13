@@ -73,7 +73,7 @@ module.exports = (robot) => {
       console.log(review);
 
       // number of approvals from the OTHER users
-      if (review.state === "APPROVED" && review.user.long !== context.payload.pull_request.user.login) {
+      if ( (review.state === "APPROVED" || review.state === "approved") && review.user.long !== context.payload.pull_request.user.login) {
         numberOfApprovals++;
       }
 
