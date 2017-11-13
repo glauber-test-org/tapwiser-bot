@@ -60,7 +60,7 @@ module.exports = (robot) => {
     let reviews = await context.github.pullRequests.getReviews({
       owner: context.payload.repository.owner.login,
       repo: context.payload.repository.name,
-      number: context.pull_request.payload.number,
+      number: context.payload.pull_request.number,
     });
 
     let numberOfApprovals = 0;
