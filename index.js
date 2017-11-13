@@ -82,7 +82,7 @@ module.exports = (robot) => {
     await context.github.issues.removeAllLabels({
       owner: context.payload.repository.owner.login,
       repo: context.payload.repository.name,
-      number: context.payload.number
+      number: context.payload.pull_request.number
     });
 
     let stateToSet = "error";
@@ -98,7 +98,7 @@ module.exports = (robot) => {
     await context.github.issues.addLabels({
       owner: context.payload.repository.owner.login,
       repo: context.payload.repository.name,
-      number: context.payload.number,
+      number: context.payload.pull_request.number,
       labels: labelsToSet
     });
 
