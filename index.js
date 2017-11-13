@@ -57,6 +57,20 @@ module.exports = (robot) => {
 
     let state = context.payload.review.state;
 
+    let reviews = await context.github.pullRequests.getReviews({
+      owner: context.payload.repository.owner.login,
+      repo: context.payload.repository.name,
+      number: context.payload.number,
+    });
+
+    for (const review of reviews) {
+
+      console.log('=======');
+      console.log(review);
+      
+    }
+
+
     // state = approved
     // state = changes_requested
 
