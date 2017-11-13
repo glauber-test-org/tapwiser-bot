@@ -79,6 +79,8 @@ module.exports = (robot) => {
 
     }
 
+    console.log("approvals = " + numberOfApprovals);
+
     await context.github.issues.removeAllLabels({
       owner: context.payload.repository.owner.login,
       repo: context.payload.repository.name,
