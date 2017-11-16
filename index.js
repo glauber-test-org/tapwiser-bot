@@ -46,13 +46,7 @@ module.exports = (robot) => {
       const params = context.issue({ body: message });
       await context.github.issues.createComment(params);
 
-      await context.github.issues.removeAllLabels({
-        owner: context.payload.repository.owner.login,
-        repo: context.payload.repository.name,
-        number: context.payload.pull_request.number
-      });
-  
-
+    
       stateToSet = "success";
       descriptionToSet = "We are all set!"
       labelsToSet = ["review:not-required"];
