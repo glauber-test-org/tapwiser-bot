@@ -69,6 +69,14 @@ module.exports = (robot) => {
 
     // let state = context.payload.review.state;
 
+    if (context.payload.review.user.login === context.payload.pull_request.user.login) {
+      // Shame! Shame!
+      const message = ":bell: Shame! :bell: Shame!\nYou cannot vote to approve your own PR. 'A' for effort though.";
+      const params = context.issue({ body: message });
+      await context.github.issues.createComment(params);
+      return;
+    }
+
     let reviews = await context.github.pullRequests.getReviews({
       owner: context.payload.repository.owner.login,
       repo: context.payload.repository.name,
@@ -89,7 +97,7 @@ module.exports = (robot) => {
       reviewStatus[review.user.login] = review.state;
     }
 
-    console.log("aqui="+JSON.stringify(reviewStatus));
+    console.log("aqui=" + JSON.stringify(reviewStatus));
 
     // number of approvals from the OTHER users
     numberOfApprovals = Object.values(reviews).filter(function (s) { return s === "approved" || s === "APPROVED"; }).length;
@@ -115,7 +123,7 @@ module.exports = (robot) => {
       labelsToSet = ["review:done"];
     }
 
-    console.log("aqui "+ numberOfApprovals);
+    console.log("aqui " + numberOfApprovals);
     console.log(JSON.stringify(reviewStatus));
 
     await context.github.issues.addLabels({
