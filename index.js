@@ -14,8 +14,8 @@ module.exports = (robot) => {
 
     const user = context.payload.pull_request.user.login;
     const reviewerCount = 2;
-    const message =     
-    `Hello @${user}! I'm your friendly review bot.
+    const message =
+      `Hello @${user}! I'm your friendly review bot.
     
     To get this PR merged you'll need the approval of ${reviewerCount} reviewers at least.
     
@@ -84,29 +84,18 @@ module.exports = (robot) => {
     // console.log("reviews = " + reviews.length);
 
     let reviewStatus = {};
-
     for (var i = 0; i < reviews.length; i++) {
-
       let review = reviews[i];
-
       reviewStatus[review.user.login] = review.state;
-
-      // number of approvals from the OTHER users
-      // if ( (review.state === "APPROVED" || review.state === "approved") && review.user.login !== context.payload.pull_request.user.login) {
-      if (review.state === "APPROVED" || review.state === "approved") {
-        numberOfApprovals++;
-      }
-
     }
 
-    console.log("AQUI " + JSON.stringify(reviewStatus));
-
-    // check the current review state
-    if(context.payload.review.state !== "approved" || context.payload.review.state !== "APPROVED" ) {
-      numberOfApprovals--;
-    }
-
-    // console.log("approvals = " + numberOfApprovals);
+    // number of approvals from the OTHER users
+    // numberOfApprovals = Object.values(reviews).filter(function (s) { return s.toLowerCase === "approved"; }).length;
+    numberOfApprovals = Object.values(reviews).filter(s => s.toLowerCase === "approved").length;
+    // {
+    //   "aforner": "CHANGES_REQUESTED",
+    //   "rfrealdo-ciandt": "APPROVED"
+    // }
 
     await context.github.issues.removeAllLabels({
       owner: context.payload.repository.owner.login,
