@@ -27,9 +27,9 @@ module.exports = (robot) => {
     // const message = Hello @' + context.payload.pull_request.user.login + '! I am your friendly review bot!'
     const params = context.issue({ body: message });
 
-     await context.github.issues.createComment(params);
+    await context.github.issues.createComment(params);
 
-     await context.github.issues.removeAllLabels({
+    await context.github.issues.removeAllLabels({
       owner: context.payload.repository.owner.login,
       repo: context.payload.repository.name,
       number: context.payload.number
@@ -40,7 +40,18 @@ module.exports = (robot) => {
     let labelsToSet = ["review:pending"];
 
 
-    if (context.payload.pull_request.head.ref === "feature/xcdatamodel" && context.payload.pull_request.base.ref === "develop") {
+    if (context.payload.pull_request.head.ref === "feature/xcdatamodel" /*&& context.payload.pull_request.base.ref === "develop"*/) {
+
+      const message = "The branch feature/xcdatamodel requires no review at all. Go! Go! Go!";
+      const params = context.issue({ body: message });
+      await context.github.issues.createComment(params);
+
+      await context.github.issues.removeAllLabels({
+        owner: context.payload.repository.owner.login,
+        repo: context.payload.repository.name,
+        number: context.payload.pull_request.number
+      });
+  
 
       stateToSet = "success";
       descriptionToSet = "We are all set!"
