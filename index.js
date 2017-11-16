@@ -73,7 +73,7 @@ module.exports = (robot) => {
 
     if (context.payload.pull_request.assignee === null) {
 
-      const message = ":warning Please assign someone to merge this PR, and optionally include people who should review.";
+      const message = ":warning: Please assign someone to merge this PR, and optionally include people who should review.";
       const params = context.issue({ body: message });
       await context.github.issues.createComment(params);
 
