@@ -106,7 +106,7 @@ module.exports = (robot) => {
     console.log("aqui=" + JSON.stringify(reviewStatus));
 
     // number of approvals from the OTHER users
-    numberOfApprovals = Object.values(reviews).filter(function (s) { return s === "approved" || s === "APPROVED"; }).length;
+    numberOfApprovals = Object.values(reviewStatus).filter(function (s) { return s === "approved" || s === "APPROVED"; }).length;
     // numberOfApprovals = Object.values(reviews).filter(s => s.toLowerCase === "approved").length;
     // {
     //   "aforner": "CHANGES_REQUESTED",
