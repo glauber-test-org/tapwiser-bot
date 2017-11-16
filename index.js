@@ -99,7 +99,7 @@ module.exports = (robot) => {
 
     }
 
-    console.log("status = " + JSON.stringify(reviewStatus));
+    console.log("AQUI " + JSON.stringify(reviewStatus));
 
     // check the current review state
     if(context.payload.review.state !== "approved" || context.payload.review.state !== "APPROVED" ) {
