@@ -13,7 +13,7 @@ module.exports = (robot) => {
   robot.on('pull_request.opened', async context => {
 
     const user = context.payload.pull_request.user.login;
-    const reviewerCount = 2;
+    const reviewerCount = 1;
     const message =
       `Hello @${user}! I'm your friendly review bot.
     
@@ -34,7 +34,7 @@ module.exports = (robot) => {
     });
 
     let stateToSet = "error";
-    let descriptionToSet = "At least 2 reviewers must approve this pull request.";
+    let descriptionToSet = `At least ${reviewerCount} reviewers must approve this pull request.`;
     let labelsToSet = ["review:pending"];
 
 
@@ -70,10 +70,16 @@ module.exports = (robot) => {
     // let state = context.payload.review.state;
 
     if (context.payload.review.user.login === context.payload.pull_request.user.login) {
-      // Shame! Shame!
-      const message = ":bell: Shame! :bell: Shame!\nYou cannot vote to approve your own PR. 'A' for effort though.";
-      const params = context.issue({ body: message });
-      await context.github.issues.createComment(params);
+
+      if (context.payload.review.state !== "comment") {
+
+        // Shame! Shame!
+        const message = ":bell: Shame! :bell: Shame!\nYou cannot vote to approve your own PR. 'A' for effort though.";
+        const params = context.issue({ body: message });
+        await context.github.issues.createComment(params);
+
+      }
+
       return;
     }
 
