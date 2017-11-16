@@ -12,7 +12,19 @@ module.exports = (robot) => {
 
   robot.on('pull_request.opened', async context => {
 
-    const params = context.issue({ body: 'Hello @' + context.payload.pull_request.user.login + '! I am your friendly review bot!' });
+    const user = context.payload.pull_request.user.login;
+    const reviewerCount = 2;
+    const message =     
+    `Hello @${user}! I'm your friendly review bot.
+    
+    To get this PR merged you'll need the approval of ${reviewerCount} reviewers at least.
+    
+    Our Code Review Rules just in case:
+    https://docs.google.com/spreadsheets/d/1mZCNhit1fXvsXw4mOJS1CgONT78sVB8-5VswbgaEZq8`;
+
+    // const message = Hello @' + context.payload.pull_request.user.login + '! I am your friendly review bot!'
+    const params = context.issue({ body: message });
+
     await context.github.issues.createComment(params);
 
     await context.github.issues.removeAllLabels({
@@ -69,12 +81,11 @@ module.exports = (robot) => {
 
       let review = reviews[i];
 
-      console.log('=======');
       console.log(review);
 
       // number of approvals from the OTHER users
       // if ( (review.state === "APPROVED" || review.state === "approved") && review.user.login !== context.payload.pull_request.user.login) {
-        if (review.state === "APPROVED" || review.state === "approved") {
+      if (review.state === "APPROVED" || review.state === "approved") {
         numberOfApprovals++;
       }
 
