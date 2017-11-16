@@ -79,9 +79,9 @@ module.exports = (robot) => {
 
     let numberOfApprovals = 0;
 
-    // console.log("aqui "+ JSON.stringify(reviews));
+    console.log("aqui "+ JSON.stringify(reviews[0]));
 
-    console.log("reviews = " + reviews.length);
+    // console.log("reviews = " + reviews.length);
 
     for (var i = 0; i < reviews.length; i++) {
 
@@ -100,7 +100,7 @@ module.exports = (robot) => {
       numberOfApprovals--;
     }
 
-    console.log("approvals = " + numberOfApprovals);
+    // console.log("approvals = " + numberOfApprovals);
 
     await context.github.issues.removeAllLabels({
       owner: context.payload.repository.owner.login,
