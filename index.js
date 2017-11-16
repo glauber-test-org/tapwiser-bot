@@ -77,7 +77,7 @@ module.exports = (robot) => {
 
     let numberOfApprovals = 0;
 
-    console.log("aqui "+ reviews);
+    console.log("aqui "+ JSON.stringify(reviews));
 
     for (var i = 0; i < reviews.length; i++) {
 
