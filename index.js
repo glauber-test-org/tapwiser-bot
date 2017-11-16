@@ -79,13 +79,13 @@ module.exports = (robot) => {
 
     let numberOfApprovals = 0;
 
-    console.log("aqui "+ JSON.stringify(reviews));
+    // console.log("aqui "+ JSON.stringify(reviews));
+
+    console.log("reviews = " + reviews.length);
 
     for (var i = 0; i < reviews.length; i++) {
 
       let review = reviews[i];
-
-      // console.log(review);
 
       // number of approvals from the OTHER users
       // if ( (review.state === "APPROVED" || review.state === "approved") && review.user.login !== context.payload.pull_request.user.login) {
@@ -93,6 +93,11 @@ module.exports = (robot) => {
         numberOfApprovals++;
       }
 
+    }
+
+    // check the current review state
+    if(context.payload.review.state !== "approved" || context.payload.review.state !== "APPROVED" ) {
+      numberOfApprovals--;
     }
 
     console.log("approvals = " + numberOfApprovals);
