@@ -75,6 +75,8 @@ module.exports = (robot) => {
       number: context.payload.pull_request.number,
     });
 
+    reviews = reviews.data;
+
     let numberOfApprovals = 0;
 
     console.log("aqui "+ JSON.stringify(reviews));
