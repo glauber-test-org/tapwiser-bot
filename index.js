@@ -25,9 +25,9 @@ module.exports = (robot) => {
     // const message = Hello @' + context.payload.pull_request.user.login + '! I am your friendly review bot!'
     const params = context.issue({ body: message });
 
-    await context.github.issues.createComment(params);
+     context.github.issues.createComment(params);
 
-    await context.github.issues.removeAllLabels({
+     context.github.issues.removeAllLabels({
       owner: context.payload.repository.owner.login,
       repo: context.payload.repository.name,
       number: context.payload.number
@@ -44,7 +44,7 @@ module.exports = (robot) => {
       descriptionToSet = "We are all set!"
       labelsToSet = ["review:not-required"];
 
-      await context.github.issues.addLabels({
+       context.github.issues.addLabels({
         owner: context.payload.repository.owner.login,
         repo: context.payload.repository.name,
         number: context.payload.number,
@@ -54,7 +54,7 @@ module.exports = (robot) => {
     }
 
 
-    await context.github.repos.createStatus({
+     context.github.repos.createStatus({
       owner: context.payload.repository.owner.login,
       repo: context.payload.repository.name,
       sha: context.payload.pull_request.head.sha,
@@ -76,14 +76,14 @@ module.exports = (robot) => {
         // Shame! Shame!
         const message = ":bell: Shame! :bell: Shame!\nYou cannot vote to approve your own PR. 'A' for effort though.";
         const params = context.issue({ body: message });
-        await context.github.issues.createComment(params);
+         context.github.issues.createComment(params);
 
       }
 
       return;
     }
 
-    let reviews = await context.github.pullRequests.getReviews({
+    let reviews = context.github.pullRequests.getReviews({
       owner: context.payload.repository.owner.login,
       repo: context.payload.repository.name,
       number: context.payload.pull_request.number,
@@ -113,7 +113,7 @@ module.exports = (robot) => {
     //   "rfrealdo-ciandt": "APPROVED"
     // }
 
-    await context.github.issues.removeAllLabels({
+   context.github.issues.removeAllLabels({
       owner: context.payload.repository.owner.login,
       repo: context.payload.repository.name,
       number: context.payload.pull_request.number
@@ -132,14 +132,14 @@ module.exports = (robot) => {
     console.log("aqui " + numberOfApprovals);
     console.log(JSON.stringify(reviewStatus));
 
-    await context.github.issues.addLabels({
+     context.github.issues.addLabels({
       owner: context.payload.repository.owner.login,
       repo: context.payload.repository.name,
       number: context.payload.pull_request.number,
       labels: labelsToSet
     });
 
-    await context.github.repos.createStatus({
+     context.github.repos.createStatus({
       owner: context.payload.repository.owner.login,
       repo: context.payload.repository.name,
       sha: context.payload.pull_request.head.sha,
