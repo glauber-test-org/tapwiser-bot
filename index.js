@@ -10,14 +10,16 @@ module.exports = (robot) => {
 
   // synchronize
 
+  const REVIEWER_COUNT = 1;
+
   robot.on('pull_request.opened', async context => {
 
     const user = context.payload.pull_request.user.login;
-    const reviewerCount = 1;
+    // const reviewerCount = 1;
     const message =
       `Hello @${user}! I'm your friendly review bot.
     
-    To get this PR merged you'll need the approval of ${reviewerCount} reviewers at least.
+    To get this PR merged you'll need the approval of ${REVIEWER_COUNT} reviewers at least.
     
     Our Code Review Rules just in case:
     https://docs.google.com/spreadsheets/d/1mZCNhit1fXvsXw4mOJS1CgONT78sVB8-5VswbgaEZq8`;
@@ -34,7 +36,7 @@ module.exports = (robot) => {
     });
 
     let stateToSet = "error";
-    let descriptionToSet = `At least ${reviewerCount} reviewers must approve this pull request.`;
+    let descriptionToSet = `At least ${REVIEWER_COUNT} reviewers must approve this pull request.`;
     let labelsToSet = ["review:pending"];
 
 
@@ -120,10 +122,10 @@ module.exports = (robot) => {
     });
 
     let stateToSet = "error";
-    let descriptionToSet = "At least 2 reviewers must approve this pull request.";
+    let descriptionToSet = `At least ${REVIEWER_COUNT} reviewers must approve this pull request.`;
     let labelsToSet = ["review:pending"];
 
-    if (numberOfApprovals >= 2) {
+    if (numberOfApprovals >= REVIEWER_COUNT) {
       stateToSet = "success";
       descriptionToSet = "We are all set!"
       labelsToSet = ["review:done"];
