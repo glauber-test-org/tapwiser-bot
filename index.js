@@ -46,7 +46,7 @@ module.exports = (robot) => {
       const params = context.issue({ body: message });
       await context.github.issues.createComment(params);
 
-    
+
       stateToSet = "success";
       descriptionToSet = "We are all set!"
       labelsToSet = ["review:not-required"];
@@ -58,17 +58,46 @@ module.exports = (robot) => {
         labels: labelsToSet
       });
 
+      await context.github.repos.createStatus({
+        owner: context.payload.repository.owner.login,
+        repo: context.payload.repository.name,
+        sha: context.payload.pull_request.head.sha,
+        state: stateToSet,
+        description: descriptionToSet,
+        context: "TapWiser Bot"
+      });
+
+      return;
+
+    }
+
+    if (context.payload.pull_request.assignee === null) {
+
+      const message = "Please assign someone to merge this PR, and optionally include people who should review.";
+      const params = context.issue({ body: message });
+      await context.github.issues.createComment(params);
+
+      stateToSet = "pending";
+      descriptionToSet = `At least ${REVIEWER_COUNT} reviewers must approve this pull request.`;
+
+      await context.github.repos.createStatus({
+        owner: context.payload.repository.owner.login,
+        repo: context.payload.repository.name,
+        sha: context.payload.pull_request.head.sha,
+        state: stateToSet,
+        description: descriptionToSet,
+        context: "TapWiser Bot"
+      });
+
+      return;
+
     }
 
 
-    await context.github.repos.createStatus({
-      owner: context.payload.repository.owner.login,
-      repo: context.payload.repository.name,
-      sha: context.payload.pull_request.head.sha,
-      state: stateToSet,
-      description: descriptionToSet,
-      context: "TapWiser Bot"
-    });
+
+
+
+
 
   });
 
