@@ -40,7 +40,7 @@ module.exports = (robot) => {
     let labelsToSet = ["review:pending"];
 
 
-    if (context.payload.pull_request.head.ref === "feature/xcdatamodel" /*&& context.payload.pull_request.base.ref === "develop"*/) {
+    if (context.payload.pull_request.head.ref === "feature/xcdatamodel" && context.payload.pull_request.base.ref === "develop") {
 
       const message = "The branch feature/xcdatamodel requires no review at all. Go! Go! Go!";
       const params = context.issue({ body: message });
@@ -142,8 +142,8 @@ module.exports = (robot) => {
     // console.log("aqui=" + JSON.stringify(reviewStatus));
 
     // number of approvals from the OTHER users
-    numberOfApprovals = Object.values(reviewStatus).filter(function (s) { return s === "approved" || s === "APPROVED"; }).length;
-    // numberOfApprovals = Object.values(reviews).filter(s => s.toLowerCase === "approved").length;
+    // numberOfApprovals = Object.values(reviewStatus).filter(function (s) { return s === "approved" || s === "APPROVED"; }).length;
+    numberOfApprovals = Object.values(reviews).filter(s => s.toLowerCase === "approved").length;
     // {
     //   "aforner": "CHANGES_REQUESTED",
     //   "rfrealdo-ciandt": "APPROVED"
