@@ -113,6 +113,9 @@ module.exports = (robot) => {
       labelsToSet = ["review:done"];
     }
 
+    console.log("aqui "+ numberOfApprovals);
+    console.log(JSON.stringify(reviewStatus));
+
     await context.github.issues.addLabels({
       owner: context.payload.repository.owner.login,
       repo: context.payload.repository.name,
