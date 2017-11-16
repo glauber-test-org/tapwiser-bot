@@ -77,7 +77,7 @@ module.exports = (robot) => {
 
     let numberOfApprovals = 0;
 
-    console.log(reviews);
+    console.log(reviews.length);
 
     for (var i = 0; i < reviews.length; i++) {
 
