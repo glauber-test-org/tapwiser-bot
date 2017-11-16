@@ -89,9 +89,11 @@ module.exports = (robot) => {
       reviewStatus[review.user.login] = review.state;
     }
 
+    console.log("aqui="+JSON.stringify(reviewStatus));
+
     // number of approvals from the OTHER users
-    // numberOfApprovals = Object.values(reviews).filter(function (s) { return s.toLowerCase === "approved"; }).length;
-    numberOfApprovals = Object.values(reviews).filter(s => s.toLowerCase === "approved").length;
+    numberOfApprovals = Object.values(reviews).filter(function (s) { return s === "approved" || s === "APPROVED"; }).length;
+    // numberOfApprovals = Object.values(reviews).filter(s => s.toLowerCase === "approved").length;
     // {
     //   "aforner": "CHANGES_REQUESTED",
     //   "rfrealdo-ciandt": "APPROVED"
