@@ -3,23 +3,9 @@ module.exports = {
         "es6": true,
         "node": true
     },
-    "extends": "eslint:all",
+    "plugins": ["node"],
+    "extends": ["eslint:recommended", "plugin:node/recommended"],
     "rules": {
-        "indent": [
-            "error",
-            "tab"
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
+        "node/exports-style": ["error", "module.exports"],
     }
 };

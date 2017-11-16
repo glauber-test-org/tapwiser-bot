@@ -77,13 +77,13 @@ module.exports = (robot) => {
 
     let numberOfApprovals = 0;
 
-    console.log(reviews.length);
+    console.log("aqui "+ reviews.length);
 
     for (var i = 0; i < reviews.length; i++) {
 
       let review = reviews[i];
 
-      console.log(review);
+      // console.log(review);
 
       // number of approvals from the OTHER users
       // if ( (review.state === "APPROVED" || review.state === "approved") && review.user.login !== context.payload.pull_request.user.login) {
