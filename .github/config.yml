@@ -1,0 +1,30 @@
+minimumApprovalCount: 2
+
+newPullRequestWelcomeComment: >
+Hello @${user}! I'm your friendly review bot.
+
+To get this PR merged you'll need the approval of ${config.minimumApprovalCount} reviewer(s) at least.
+
+For reviewers, this is our Code Review Rules just in case
+https://docs.google.com/spreadsheets/d/1mZCNhit1fXvsXw4mOJS1CgONT78sVB8-5VswbgaEZq8`
+
+If you understand this pull request requires no QA approval, please comment **QA approval is not needed** and I'll do my magic!
+
+assigneeIsNullWarningMessage: >
+:warning: Please assign someone to merge this PR, and optionally include people who should review.
+
+xcdatamodelRequiresNoApprovalMessage: >
+The branch feature/xcdatamodel requires no review at all. Go! Go! Go!
+
+pullRequestMergedMessage: >
+Hey ${user} 👋
+
+Thank you for your contribution and congrats on getting this pull request merged 🎉
+
+The code change now lives in the ${branch} branch.
+
+insufficientApprovalsMessage: >
+At least ${config.minimumApprovalCount} reviewers must approve this pull request
+
+approvedMessage: >
+We are all set!
