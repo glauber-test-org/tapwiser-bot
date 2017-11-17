@@ -71,29 +71,29 @@ module.exports = (robot) => {
     }
   };
 
-  const onPullRequestOpened = async (context) => {
+  async function onPullRequestOpened(context) {
 
     // const user = context.payload.pull_request.user.login;
 
     let config = await context.config('config.yml');
 
-    console.log('aqui '+ JSON.stringify(config));
+    console.log('aqui ' + JSON.stringify(config));
 
     await postComment(context, config.newPullRequestWelcomeComment);
 
     autoFillAssignee(context, config);
 
     xcdataRequiresNoApproval(context, config);
-  };
+  }
 
-  const onPullRequestClosed = async (context) => {
+  async function onPullRequestClosed(context) {
     const isMerged = context.payload.pull_request.merged && context.payload.pull_request.merged === true;
 
     if (isMerged === true) {
       const config = await context.config('config.yml');
       postComment(context, config.pullRequestMergedMessage);
     }
-  };
+  }
 
 
   const onPullRequestUpdate = async context => {
