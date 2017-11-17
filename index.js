@@ -1,6 +1,13 @@
-module.exports = (robot) => {
+module.exports = async robot => {
 
   console.log('Robot is ready.')
+
+
+  robot.on('pull_request.opened', onPullRequestOpened);
+  robot.on('pull_request.closed', onPullRequestClosed);
+  robot.on(['pull_request.synchronize', 'pull_request_review.submitted'], onPullRequestUpdate);
+
+
 
   const postComment = async (context, message) => {
     const params = context.issue({ body: message });
@@ -72,6 +79,8 @@ module.exports = (robot) => {
   };
 
   async function onPullRequestOpened(context) {
+
+    console.log('aqui '+ JSON.stringify(context));
 
     // const user = context.payload.pull_request.user.login;
 
@@ -191,8 +200,6 @@ module.exports = (robot) => {
 
 
 
-  robot.on('pull_request.opened', onPullRequestOpened);
-  robot.on('pull_request.closed', onPullRequestClosed);
-  robot.on(['pull_request.synchronize', 'pull_request_review.submitted'], onPullRequestUpdate);
+ 
 
 }
