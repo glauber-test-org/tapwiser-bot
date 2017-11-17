@@ -75,7 +75,9 @@ module.exports = (robot) => {
 
     // const user = context.payload.pull_request.user.login;
 
-    const config = await context.config('config.yml');
+    let config = await context.config('config.yml');
+
+    console.log('aqui '+ JSON.stringify(config));
 
     await postComment(context, config.newPullRequestWelcomeComment);
 
